@@ -99,7 +99,6 @@ new class extends Component {
 
 
 <div>
-
     <div class="p-10">
         <h1
         class="flex justify-start items-center gap-2"
@@ -110,14 +109,32 @@ new class extends Component {
             </svg>
             Settings</h1>
 
-
-        <div class="border border-b-gray-400 shadow-lg p-10 rounded mt-5">
+        <div class="border border-secondary shadow-lg p-10 rounded mt-5">
+            <ul>
+                <li class="flex justify-start items-center gap-2">
+                    @if($settings->ollama_server_reachable == true)
+                        <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
+                    </span>
+                    @elseif($settings->ollama_server_reachable == false)
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </span>
+                    @endif
+                    Ollama Can be Reached
+                </li>
+            </ul>
+        </div>
+        <div class="border border-secondary shadow-lg p-5 rounded mt-5">
             <div>
                 Let's check your Ollama install
             </div>
-
             <button
-                class="btn btn-active btn-neutral"
+                class="btn btn-active btn-secondary "
                 wire:click="check">Check Install</button>
 
 
@@ -125,8 +142,8 @@ new class extends Component {
                 @if(count($tags) === 0 )
                     No models yet or not checked.
                 @else
-                    <div class="overflow-x-auto">
-                        <table class="table table-zebra">
+                    <div class="overflow-x-auto mt-10 border-secondary">
+                        <table class="table table-zebra border">
                             <!-- head -->
                             <thead>
                             <tr>
@@ -160,26 +177,7 @@ new class extends Component {
 
         </div>
 
-        <div class="border border-b-gray-400 shadow-lg p-10 rounded mt-5">
-            <ul>
-                <li class="flex justify-start items-center gap-2">
-                    @if($settings->ollama_server_reachable == true)
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                        </svg>
-                    </span>
-                    @elseif($settings->ollama_server_reachable == false)
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                        </span>
-                    @endif
-                    Ollama Can be Reached
-                </li>
-            </ul>
-        </div>
+
         @if($settings->ollama_server_reachable == false)
             <div class="border border-b-gray-400 shadow-lg p-10 rounded mt-5">
                 <div>
