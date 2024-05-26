@@ -22,4 +22,16 @@ class SettingsRepository
 
         return $setting;
     }
+
+    public function addModel(string $model, string $type = 'chat'): Setting
+    {
+        $models = $this->getSetting()->models;
+
+        $models[$type][] = $model;
+        $this->getSetting()->updateQuietly([
+            'models' => $models,
+        ]);
+
+        return $this->getSetting()->refresh();
+    }
 }

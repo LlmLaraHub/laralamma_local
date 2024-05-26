@@ -38,7 +38,7 @@ class DownloadOllama
             if ($results->successful()) {
                 return true;
             } else {
-                $results->throw();
+                return $results->errorOutput();
             }
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('An error occurred getting model : '.$e->getMessage());

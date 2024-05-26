@@ -16,8 +16,6 @@ new class extends Component {
 
     public string $package_name = "Ollama-darwin.zip";
 
-    public bool $ollama_downloaded = false;
-
     public bool $checking = false;
 
     public string $download_path = "";
@@ -36,13 +34,11 @@ new class extends Component {
     public function checkDownloaded()
     {
         if(DownloadOllama::isDownloaded($this->package_name)) {
-            $this->ollama_downloaded = true;
             SettingsRepository::updateSetting(
                 field: 'ollama_downloaded',
                 state: true
             );
         } else {
-            $this->ollama_downloaded = false;
             SettingsRepository::updateSetting(
                 field: 'ollama_downloaded',
                 state: false
@@ -103,19 +99,15 @@ new class extends Component {
         $results = DownloadOllama::pull($model);
 
         if($results === true) {
-            SettingsRepository::updateSetting(
-                field: 'ollama_downloaded',
-                state: true
+            SettingsRepository::addModel(
+                model: $model,
+                type: "chat"
             );
+
         } else {
             \Native\Laravel\Facades\Notification::title('LaraLamma Local')
                 ->message('ERROR: ' . $results)
                 ->show();
-
-            SettingsRepository::updateSetting(
-                field: 'ollama_downloaded',
-                state: false
-            );
         }
     }
 
@@ -273,7 +265,7 @@ new class extends Component {
         @endif
 
 
-        @if($ollama_downloaded == true && !$settings->ollama_server_reachable)
+        @if($settings->ollama_downloaded == true && !$settings->ollama_server_reachable)
             <div class="border border-b-gray-400 shadow-lg p-10 rounded mt-5">
                 <div>
                     The file is downloaded you can now open

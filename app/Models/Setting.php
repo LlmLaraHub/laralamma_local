@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property bool $ollama_server_reachable
  * @property bool $ollama_downloaded
+ * @property array $models
  */
 class Setting extends Model
 {

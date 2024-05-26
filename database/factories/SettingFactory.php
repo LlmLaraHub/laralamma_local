@@ -23,12 +23,12 @@ class SettingFactory extends Factory
             'ollama_downloaded' => true,
             'models' => [
                 'embedding' => [
-                    'mxbai-embed-large'
+                    'mxbai-embed-large',
                 ],
                 'chat' => [
-                    'llama3'
-                ]
-            ]
+                    'llama3',
+                ],
+            ],
         ];
     }
 }

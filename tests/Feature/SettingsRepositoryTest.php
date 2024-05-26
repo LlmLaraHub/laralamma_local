@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domains\Settings\SettingsRepository;
+use App\Models\Setting;
 use Tests\TestCase;
 
 class SettingsRepositoryTest extends TestCase
@@ -25,5 +26,25 @@ class SettingsRepositoryTest extends TestCase
         );
 
         $this->assertEquals(true, $setting->ollama_downloaded);
+    }
+
+    public function test_add_model(): void
+    {
+        Setting::factory()->create([
+            'models' => [],
+        ]);
+
+        $setting = (new SettingsRepository())->addModel(
+            'llama3'
+        );
+
+        $this->assertNotNull(
+            data_get($setting->refresh()->models, 'chat.0')
+        );
+
+        $this->assertEquals(
+            'llama3',
+            data_get($setting->refresh()->models, 'chat.0')
+        );
     }
 }
