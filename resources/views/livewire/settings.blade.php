@@ -16,7 +16,7 @@ new class extends Component {
 
     public string $package_name = "Ollama-darwin.zip";
 
-    public bool $ollama_binary_downloaded = false;
+    public bool $ollama_downloaded = false;
 
     public bool $checking = false;
 
@@ -36,13 +36,13 @@ new class extends Component {
     public function checkDownloaded()
     {
         if(DownloadOllama::isDownloaded($this->package_name)) {
-            $this->ollama_binary_downloaded = true;
+            $this->ollama_downloaded = true;
             SettingsRepository::updateSetting(
                 field: 'ollama_downloaded',
                 state: true
             );
         } else {
-            $this->ollama_binary_downloaded = false;
+            $this->ollama_downloaded = false;
             SettingsRepository::updateSetting(
                 field: 'ollama_downloaded',
                 state: false
@@ -88,31 +88,15 @@ new class extends Component {
                 }
     }
 
-
-
     public function listModels()
     {
-        $response = \Illuminate\Support\Facades\Http::get("http://localhost:11434/api/tags");
+        $tags = CheckOllamaRunning::getTags();
 
-        $this->tags = $response->json();
+        $this->tags = $tags;
     }
 
     public function downloadLlama3() {
-        \Illuminate\Support\Facades\Log::info("Going to download Llama3");
 
-        $url = 'https://ollama.com/download/Ollama-darwin.zip';
-
-        try {
-            \Illuminate\Support\Facades\Process::run('ollama pull llama3');
-
-            $this->setting->update([
-                'ollama_completion_model' => 'llama3'
-            ]);
-
-            \Illuminate\Support\Facades\Log::info("Downloaded");
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error("An error occurred while downloading: " . $e->getMessage());
-        }
     }
 
     public function openDownloads()
@@ -121,23 +105,29 @@ new class extends Component {
     }
 
     public function downloadOllama() {
-        \Illuminate\Support\Facades\Log::info("Going to download");
 
-        $url = 'https://ollama.com/download/Ollama-darwin.zip';
+        \Native\Laravel\Facades\Notification::title('LaraLamma Local')
+            ->message('This may take a moment if not downloaded')
+            ->show();
 
-        try {
-            $response = \Illuminate\Support\Facades\Http::get($url);
+        $results = DownloadOllama::download();
 
-            if ($response->ok()) {
-                \Illuminate\Support\Facades\Storage::disk('downloads')->put($this->package_name, $response->body());
-                \Illuminate\Support\Facades\Log::info("File downloaded successfully");
-                $this->ollama_binary_downloaded = true;
-            } else {
-                \Illuminate\Support\Facades\Log::error("Failed to download file, HTTP status code: " . $response->status());
-            }
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error("An error occurred while downloading: " . $e->getMessage());
+        if($results === true) {
+            SettingsRepository::updateSetting(
+                field: 'ollama_downloaded',
+                state: true
+            );
+        } else {
+            \Native\Laravel\Facades\Notification::title('LaraLamma Local')
+                ->message('ERROR: ' . $results)
+                ->show();
+
+            SettingsRepository::updateSetting(
+                field: 'ollama_downloaded',
+                state: false
+            );
         }
+
     }
 } ?>
 
@@ -246,7 +236,7 @@ new class extends Component {
         </div>
 
 
-        @if($settings->ollama_server_reachable == false && !$ollama_binary_downloaded)
+        @if($settings->ollama_server_reachable == false && !$ollama_downloaded)
             <div class="border border-b-gray-400 shadow-lg p-10 rounded mt-5">
                 <div>
                     Since we can not reach the server lets make sure you downloaded the Ollama server,
@@ -263,7 +253,7 @@ new class extends Component {
         @endif
 
 
-        @if($ollama_binary_downloaded == true && !$settings->ollama_server_reachable)
+        @if($ollama_downloaded == true && !$settings->ollama_server_reachable)
             <div class="border border-b-gray-400 shadow-lg p-10 rounded mt-5">
                 <div>
                     The file is downloaded you can now open

@@ -58,4 +58,25 @@ class SettingsTest extends TestCase
 
         $this->assertTrue($settings->ollama_server_reachable);
     }
+
+    public function test_list_models(): void
+    {
+        DownloadOllama::shouldReceive('downloadPath')
+            ->once()
+            ->andReturn('some/folder/this.zip');
+
+        DownloadOllama::shouldReceive('isDownloaded')
+            ->once()
+            ->andReturn(true);
+
+        $data = get_fixture('tags.json');
+
+        CheckOllamaRunning::shouldReceive('getTags')
+            ->once()
+            ->andReturn($data);
+
+        Volt::test('settings')
+            ->call('listModels');
+
+    }
 }
