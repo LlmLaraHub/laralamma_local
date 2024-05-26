@@ -2,6 +2,8 @@
 
 namespace App\Domains\Settings;
 
+use Illuminate\Support\Facades\Log;
+
 class DownloadOllama
 {
     public function downloadPath(string $package_name): string
@@ -33,15 +35,28 @@ class DownloadOllama
 
     public function pullModel(string $model = 'llama3'): bool|string
     {
+        Log::info('Starting pullModel of '.$model);
         try {
-            $results = \Illuminate\Support\Facades\Process::run('ollama pull llama3');
+            $process = \Illuminate\Support\Facades\Process::timeout(600)->start('ollama pull '.$model);
+            while ($process->running()) {
+                Log::info('Running pullModel of '.$model);
+            }
+
+            $results = $process->wait();
+
             if ($results->successful()) {
+                Log::info('Completed pullModel of '.$model);
+
                 return true;
             } else {
+
+                Log::info('Failed pullModel of '.$model);
+
                 return $results->errorOutput();
             }
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('An error occurred getting model : '.$e->getMessage());
+            Log::info('Failed pullModel of '.$model);
+            Log::error('An error occurred getting model : '.$e->getMessage());
 
             return $e->getMessage();
         }

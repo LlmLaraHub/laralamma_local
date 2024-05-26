@@ -20,6 +20,7 @@ class SettingFactory extends Factory
             'ollama_completion_model' => 'llama3',
             'ollama_embedding_model' => 'mxbai-embed-large',
             'ollama_server_reachable' => true,
+            'installed_ollama' => true,
             'ollama_downloaded' => true,
             'models' => [
                 'embedding' => [

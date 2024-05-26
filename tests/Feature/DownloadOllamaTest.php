@@ -61,7 +61,6 @@ class DownloadOllamaTest extends TestCase
             ),
         ]);
         $results = (new DownloadOllama())->pullModel();
-
-        $this->assertStringContainsString('failed', $results);
+        $this->assertStringContainsString('Test error output', $results);
     }
 }

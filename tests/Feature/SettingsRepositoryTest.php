@@ -34,6 +34,12 @@ class SettingsRepositoryTest extends TestCase
             'models' => [],
         ]);
 
+        $this->assertFalse(
+            (new SettingsRepository())->hasModel(
+                'llama3'
+            )
+        );
+
         $setting = (new SettingsRepository())->addModel(
             'llama3'
         );
@@ -45,6 +51,12 @@ class SettingsRepositoryTest extends TestCase
         $this->assertEquals(
             'llama3',
             data_get($setting->refresh()->models, 'chat.0')
+        );
+
+        $this->assertTrue(
+            (new SettingsRepository())->hasModel(
+                'llama3'
+            )
         );
     }
 }

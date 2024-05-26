@@ -34,4 +34,16 @@ class SettingsRepository
 
         return $this->getSetting()->refresh();
     }
+
+    public function hasModel(string $model, string $type = 'chat'): bool
+    {
+        $models = data_get($this->getSetting()->models, $type, []);
+
+        return in_array($model, $models);
+    }
+
+    public function hasModels(string $type = 'chat'): bool
+    {
+        return ! empty(data_get($this->getSetting()->models, $type, []));
+    }
 }

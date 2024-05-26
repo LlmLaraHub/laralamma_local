@@ -64,6 +64,11 @@ new class extends Component {
                             state: true
                         );
 
+                        SettingsRepository::updateSetting(
+                            field: 'installed_ollama',
+                            state: true
+                        );
+
                         $tags = CheckOllamaRunning::getTags();
 
                         $this->tags = $tags;
@@ -91,19 +96,21 @@ new class extends Component {
         $this->tags = $tags;
     }
 
-    public function downloadLlama3(string $model = "llama3") {
+    public function downloadModel(string $model = "llama3") {
         \Native\Laravel\Facades\Notification::title('LaraLamma Local')
             ->message('Getting model ' . $model)
             ->show();
 
-        $results = DownloadOllama::pull($model);
+        $results = DownloadOllama::pullModel($model);
 
         if($results === true) {
             SettingsRepository::addModel(
                 model: $model,
                 type: "chat"
             );
-
+            \Native\Laravel\Facades\Notification::title('LaraLamma Local')
+                ->message('Model downloaded ' . $results)
+                ->show();
         } else {
             \Native\Laravel\Facades\Notification::title('LaraLamma Local')
                 ->message('ERROR: ' . $results)
@@ -168,16 +175,16 @@ new class extends Component {
         </div>
 
         <ul class="steps w-full mt-10 mb-5">
-            <li class="step step-primary">Download Ollama</li>
-            <li class="step step-primary">Install Ollama</li>
-            <li class="step @if($settings->ollama_server_reachable) step-secondary @endif"">Install Model</li>
+            <li class="step @if($settings->ollama_downloaded) step-secondary @endif">Download Ollama</li>
+            <li class="step @if($settings->installed_ollama || $settings->ollama_server_reachable) step-secondary @endif">Install Ollama</li>
             <li class="step @if($settings->ollama_server_reachable) step-secondary @endif">Check if Running</li>
+            <li class="step @if(SettingsRepository::hasModels()) step-secondary @endif">Install Models</li>
         </ul>
 
         <div class="border border-secondary shadow-lg p-10 rounded mt-5">
             <ul>
                 <li class="flex justify-start items-center gap-2">
-                    @if($settings->ollama_server_reachable == true)
+                    @if($settings->ollama_server_reachable)
                         <span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
@@ -185,7 +192,7 @@ new class extends Component {
                     </span>
                         Ollama is working property!
 
-                    @elseif($settings->ollama_server_reachable == false)
+                    @elseif(!$settings->ollama_server_reachable)
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -248,7 +255,7 @@ new class extends Component {
         </div>
 
 
-        @if($settings->ollama_server_reachable == false && !$ollama_downloaded)
+        @if($settings->ollama_server_reachable == false && !$settings->ollama_downloaded)
             <div class="border border-b-gray-400 shadow-lg p-10 rounded mt-5">
                 <div>
                     Since we can not reach the server lets make sure you downloaded the Ollama server,
@@ -275,21 +282,30 @@ new class extends Component {
 
                     it and follow tine installation instructions
                 </div>
-                @if($settings->ollama_server_reachable)
-                    <div>
-                        <div>
-                            Once installed you can click here to download your first model
-                        </div>
-                        <button wire:click="downloadLlama3" class="btn btn-active btn-neutral">download a model like llama3</button>
-                        <div wire:loading>
-                            <progress class="progress w-56"></progress>
-                        </div>
-                    </div>
-                @else
-                    <div>When it is installed and running click "Check Install"</div>
-                @endif
             </div>
         @endif
+
+
+        <div class="border border-secondary shadow-lg p-5 rounded mt-5">
+
+
+        @if($settings->ollama_server_reachable)
+            <div class="shadow-lg  rounded ">
+                <div>
+                    Now you can download a model to run in Ollama
+                </div>
+                <div class="flex justify-center gap-2">
+                    <button wire:click="downloadModel('llama')" class="btn btn-active btn-neutral">download a model like llama3</button>
+                    <button wire:click="downloadModel('gemma')" class="btn btn-active btn-neutral">download a model like gemma</button>
+                </div>
+                <div wire:loading>
+                    <progress class="progress w-56"></progress>
+                </div>
+            </div>
+        @else
+            <div>When it is installed and running click "Check Install"</div>
+        @endif
+        </div>
     </div>
 
 

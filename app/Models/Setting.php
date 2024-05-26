@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property bool $ollama_server_reachable
  * @property bool $ollama_downloaded
+ * @property bool $installed_ollama
  * @property array $models
  */
 class Setting extends Model
@@ -19,6 +20,7 @@ class Setting extends Model
     protected $casts = [
         'models' => 'array',
         'ollama_downloaded' => 'bool',
+        'installed_ollama' => 'bool',
         'ollama_binary_downloaded' => 'bool',
         'ollama_server_reachable' => 'bool',
     ];
