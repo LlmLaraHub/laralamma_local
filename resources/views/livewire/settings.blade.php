@@ -95,8 +95,28 @@ new class extends Component {
         $this->tags = $tags;
     }
 
-    public function downloadLlama3() {
+    public function downloadLlama3(string $model = "llama3") {
+        \Native\Laravel\Facades\Notification::title('LaraLamma Local')
+            ->message('Getting model ' . $model)
+            ->show();
 
+        $results = DownloadOllama::pull($model);
+
+        if($results === true) {
+            SettingsRepository::updateSetting(
+                field: 'ollama_downloaded',
+                state: true
+            );
+        } else {
+            \Native\Laravel\Facades\Notification::title('LaraLamma Local')
+                ->message('ERROR: ' . $results)
+                ->show();
+
+            SettingsRepository::updateSetting(
+                field: 'ollama_downloaded',
+                state: false
+            );
+        }
     }
 
     public function openDownloads()

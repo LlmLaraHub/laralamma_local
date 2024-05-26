@@ -16,6 +16,7 @@ class Setting extends Model
     protected $guarded = [];
 
     protected $casts = [
+        'models' => 'array',
         'ollama_downloaded' => 'bool',
         'ollama_binary_downloaded' => 'bool',
         'ollama_server_reachable' => 'bool',

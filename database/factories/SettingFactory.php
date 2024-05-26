@@ -20,7 +20,15 @@ class SettingFactory extends Factory
             'ollama_completion_model' => 'llama3',
             'ollama_embedding_model' => 'mxbai-embed-large',
             'ollama_server_reachable' => true,
-            'ollama_binary_downloaded' => true,
+            'ollama_downloaded' => true,
+            'models' => [
+                'embedding' => [
+                    'mxbai-embed-large'
+                ],
+                'chat' => [
+                    'llama3'
+                ]
+            ]
         ];
     }
 }
