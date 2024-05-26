@@ -11,6 +11,14 @@ use Tests\TestCase;
 
 class OllamaClientTest extends TestCase
 {
+
+    //setup
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Http::preventStrayRequests();
+    }
+
     public function test_completion(): void
     {
         $client = new OllamaClient();
@@ -18,7 +26,7 @@ class OllamaClientTest extends TestCase
         $data = get_fixture('ollama_results.json');
 
         Http::fake([
-            '127.0.0.1:11434/*' => Http::response($data, 200),
+            'localhost:11434/*' => Http::response($data, 200),
         ]);
 
         $results = $client->completion('test');
@@ -40,7 +48,7 @@ class OllamaClientTest extends TestCase
         $data = get_fixture('ollama_chat_results.json');
 
         Http::fake([
-            '127.0.0.1:11434/*' => Http::response($data, 200),
+            'localhost:11434/*' => Http::response($data, 200),
         ]);
 
         $results = $client->chat([
@@ -72,7 +80,7 @@ class OllamaClientTest extends TestCase
         $data = get_fixture('ollamas_function_response.json');
 
         Http::fake([
-            '127.0.0.1:11434/*' => Http::response($data, 200),
+            'localhost:11434/*' => Http::response($data, 200),
         ]);
 
         $openaiClient = new OllamaClient();

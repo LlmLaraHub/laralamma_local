@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Volt::route('/', 'settings')->name('settings');
+Volt::route('/', 'why')->name('home');
+
+Volt::route('/settings', 'settings')->name('settings');
+
 Volt::route('/chat', 'chat')->name('chat');
 
 Route::get('/ollama/downloaded', function () {

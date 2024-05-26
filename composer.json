@@ -29,7 +29,8 @@
     },
     "autoload": {
         "files": [
-            "app/Services/LlmServices/helpers.php"
+            "app/Services/LlmServices/helpers.php",
+            "app/helpers.php"
         ],
         "psr-4": {
             "App\\": "app/",

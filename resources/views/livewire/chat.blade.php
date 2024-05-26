@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Volt\Component;
+use Livewire\Attributes\Session;
 
 new class extends Component {
 
@@ -9,6 +10,7 @@ new class extends Component {
     /**
      * @var array $messages
      */
+    #[Session]
     public array $messages = [];
 
     public bool $running = false;
@@ -18,6 +20,7 @@ new class extends Component {
          $this->running = true;
 
          $this->validate();
+
 
          $this->messages[] = [
              'content' => $this->form->input,
@@ -46,7 +49,7 @@ new class extends Component {
 } ?>
 
 <div>
-    <div>
+    <div class="lg:hidden flex">
         <h1
             class="flex justify-start items-center gap-2"
         >
@@ -56,21 +59,23 @@ new class extends Component {
 
             Chat</h1>
     </div>
-    <div class="border border-secondary shadow-lg p-10 rounded mt-5">
+    <div class="shadow-lg p-10 rounded mt-5">
 
         <div class="h-[300px] overflow-y-scroll">
             @foreach($messages as $index => $message)
-                @if($index % 2 === 0)
-                <div class="chat chat-start">
-                    <div class="chat-bubble">{{ $message['content'] }}</div>
+                <div wire:transition>
+                    @if($index % 2 === 0)
+                        <div class="chat chat-start">
+                            <div class="chat-bubble">{{ $message['content'] }}</div>
+                        </div>
+                        @else
+                        <div class="chat chat-end">
+                            <div class="chat-bubble">
+                                <x-markdown>{!! $message['content'] !!}</x-markdown>
+                            </div>
+                        </div>
+                    @endif
                 </div>
-                @else
-                <div class="chat chat-end">
-                    <div class="chat-bubble">
-                        <x-markdown>{!! $message['content'] !!}</x-markdown>
-                    </div>
-                </div>
-                @endif
             @endforeach
 
             <div class="w-full" wire:loading>
