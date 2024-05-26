@@ -2,12 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Setting;
 use Facades\App\Domains\Settings\CheckOllamaRunning;
 use Facades\App\Domains\Settings\DownloadOllama;
-use App\Models\Setting;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Volt\Volt;
 use Tests\TestCase;
 
@@ -15,12 +13,11 @@ class SettingsTest extends TestCase
 {
     use RefreshDatabase;
 
-
     public function test_creates_settings(): void
     {
         DownloadOllama::shouldReceive('downloadPath')
             ->once()
-            ->andReturn("some/folder/this.zip");
+            ->andReturn('some/folder/this.zip');
 
         DownloadOllama::shouldReceive('isDownloaded')
             ->once()
@@ -34,12 +31,11 @@ class SettingsTest extends TestCase
         $this->assertTrue($settings->ollama_downloaded);
     }
 
-
     public function test_check_running(): void
     {
         DownloadOllama::shouldReceive('downloadPath')
             ->once()
-            ->andReturn("some/folder/this.zip");
+            ->andReturn('some/folder/this.zip');
 
         DownloadOllama::shouldReceive('isDownloaded')
             ->once()
@@ -49,8 +45,7 @@ class SettingsTest extends TestCase
             ->once()
             ->andReturn(true);
 
-
-        $data = get_fixture("tags.json");
+        $data = get_fixture('tags.json');
 
         CheckOllamaRunning::shouldReceive('getTags')
             ->once()

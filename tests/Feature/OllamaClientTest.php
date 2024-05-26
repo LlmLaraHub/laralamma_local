@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class OllamaClientTest extends TestCase
 {
-
     //setup
     protected function setUp(): void
     {
