@@ -48,7 +48,7 @@ jobs:
 
       - name: Prepare the application
         run: |
-          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          php -r "file_exists('.env') || copy('.env.github', '.env');"
           php artisan key:generate
 
       - name: Clear Config
@@ -75,19 +75,19 @@ jobs:
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
-  cd:
-    runs-on: ubuntu-latest
-    needs: ci
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-          tools: composer:v2
-          coverage: none
-      - name: Install Project Dependencies
-        run: |
-          curl https://envoyer.io/deploy/${{ secrets.ENVOYER }}
+#  cd:
+#    runs-on: ubuntu-latest
+#    needs: ci
+#    if: github.ref == 'refs/heads/main'
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: 8.2
+#          tools: composer:v2
+#          coverage: none
+#      - name: Install Project Dependencies
+#        run: |
+#          curl https://envoyer.io/deploy/${{ secrets.ENVOYER }}
