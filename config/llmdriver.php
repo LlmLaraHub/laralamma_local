@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'driver' => env('LLM_DRIVER', 'mock'),
+    'driver' => env('LLM_DRIVER', 'ollama'),
 
     'chunking' => [
         'default_size' => env('CHUNK_SIZE', 600),

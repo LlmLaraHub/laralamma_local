@@ -99,7 +99,7 @@ new class extends Component {
 
 
 <div>
-    <div class="p-10">
+    <div >
         <h1
         class="flex justify-start items-center gap-2"
         >
