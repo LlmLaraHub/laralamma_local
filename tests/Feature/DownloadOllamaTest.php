@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Domains\Settings\DownloadOllama;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +24,7 @@ class DownloadOllamaTest extends TestCase
     public function test_download_ollama(): void
     {
         Http::fake([
-           'ollama.com/*' => Http::response("foo")
+            'ollama.com/*' => Http::response('foo'),
         ]);
 
         $results = (new DownloadOllama())->download();
@@ -37,12 +35,12 @@ class DownloadOllamaTest extends TestCase
     public function test_download_ollama_failed(): void
     {
         Http::fake([
-            'ollama.com/*' => Http::response("foo", 500)
+            'ollama.com/*' => Http::response('foo', 500),
         ]);
 
         $results = (new DownloadOllama())->download();
 
-        $this->assertStringContainsString("foo", $results);
+        $this->assertStringContainsString('foo', $results);
     }
 
     public function test_pull()
@@ -64,6 +62,6 @@ class DownloadOllamaTest extends TestCase
         ]);
         $results = (new DownloadOllama())->pullModel();
 
-        $this->assertStringContainsString("failed", $results);
+        $this->assertStringContainsString('failed', $results);
     }
 }
