@@ -13,5 +13,3 @@ Route::get('/ollama/downloaded', function () {
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-
-require __DIR__.'/auth.php';

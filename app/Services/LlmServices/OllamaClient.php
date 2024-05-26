@@ -118,7 +118,7 @@ class OllamaClient extends BaseClient
     {
         $functions = LlmDriverFacade::getFunctions();
 
-        if (! Feature::activate('ollama-functions')) {
+        if (Feature::activate('ollama-functions') === false) {
             return [];
         }
 

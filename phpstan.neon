@@ -1,0 +1,21 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app
+
+    # The level 8 is the highest level
+    level: 5
+
+    #ignoreErrors:
+
+    excludePaths:
+        - vendor
+        - app/Actions/*
+        - app/Http/Resources/BookResource.php
+        - app/Services/LlmServices/OpenAiClient.php
+        - app/Services/LlmServices/OllamaClient.php
+
+    checkMissingIterableValueType: false
