@@ -101,21 +101,27 @@ new class extends Component {
             ->message('Getting model ' . $model)
             ->show();
 
-        $results = DownloadOllama::pullModel($model);
+        \App\Jobs\PullModelJob::dispatch($model);
 
-        if($results === true) {
-            SettingsRepository::addModel(
-                model: $model,
-                type: "chat"
-            );
-            \Native\Laravel\Facades\Notification::title('LaraLamma Local')
-                ->message('Model downloaded ' . $results)
-                ->show();
-        } else {
-            \Native\Laravel\Facades\Notification::title('LaraLamma Local')
-                ->message('ERROR: ' . $results)
-                ->show();
-        }
+        //$results = DownloadOllama::pullModel($model);
+
+        \Native\Laravel\Facades\Notification::title('LaraLamma Local')
+            ->message('This is a long running job so it was put into the queue')
+            ->show();
+
+//        if($results === true) {
+//            SettingsRepository::addModel(
+//                model: $model,
+//                type: "chat"
+//            );
+//            \Native\Laravel\Facades\Notification::title('LaraLamma Local')
+//                ->message('Model downloaded ' . $results)
+//                ->show();
+//        } else {
+//            \Native\Laravel\Facades\Notification::title('LaraLamma Local')
+//                ->message('ERROR: ' . $results)
+//                ->show();
+//        }
     }
 
     public function openDownloads()

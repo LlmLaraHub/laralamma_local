@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class PullModelJob implements ShouldQueue
 {
@@ -15,7 +16,7 @@ class PullModelJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(public string $model)
     {
         //
     }
@@ -25,6 +26,8 @@ class PullModelJob implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        Log::info("Job on queue", [
+            'model' => $this->model
+        ]);
     }
 }

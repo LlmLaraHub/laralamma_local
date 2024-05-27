@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('llms', function (Blueprint $table) {
-            $table->id();
-            $table->string("model_name");
-            $table->dateTime("last_run")->nullable();
-            $table->string("status")->default(\App\Domains\Llms\PullStatus::Pending->value);
-            $table->timestamps();
+        Schema::table('llms', function (Blueprint $table) {
+            $table->string("type")->default(\App\Domains\Llms\PullStatus::Pending->value);
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('llms');
+        Schema::table('llms', function (Blueprint $table) {
+            //
+        });
     }
 };

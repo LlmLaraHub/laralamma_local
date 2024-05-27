@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class RunLlmPullsCommand extends Command
 {
@@ -25,6 +27,7 @@ class RunLlmPullsCommand extends Command
      */
     public function handle()
     {
-        //
+        $randomId = Str::random();
+        Log::info("Running Llm Pulls " . $randomId);
     }
 }

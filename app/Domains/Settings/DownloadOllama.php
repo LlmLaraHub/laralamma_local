@@ -38,6 +38,7 @@ class DownloadOllama
         Log::info('Starting pullModel of '.$model);
         try {
             $process = \Illuminate\Support\Facades\Process::timeout(600)->start('ollama pull '.$model);
+
             while ($process->running()) {
                 Log::info('Running pullModel of '.$model);
             }

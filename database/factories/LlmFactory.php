@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domains\Llms\PullStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,12 @@ class LlmFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'model_name' => fake()->randomElement([
+                'llama3',
+                'gemma '
+            ]),
+            'last_run' => fake()->dateTime(),
+            'status' => PullStatus::Pending
         ];
     }
 }
