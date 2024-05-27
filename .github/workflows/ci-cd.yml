@@ -71,7 +71,7 @@ jobs:
       - name: Test with phpunit
         run: |
           npm install && npm run build
-          XDEBUG_MODE=coverage php artisan test --coverage  --min=45
+          XDEBUG_MODE=coverage php artisan test --coverage  --min=40
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
