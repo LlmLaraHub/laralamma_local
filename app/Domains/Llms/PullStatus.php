@@ -7,16 +7,14 @@ use App\Helpers\EnumHelperTrait;
 /**
  * @property PullStatus $status
  */
-enum PullStatus : string
+enum PullStatus: string
 {
-
     use EnumHelperTrait;
 
+    case Pending = 'pending';
+    case Processing = 'processing';
 
-    case Pending = "pending";
-    case Processing = "processing";
+    case Complete = 'complete';
 
-    case Complete = "complete";
-
-    case Failed = "failed";
+    case Failed = 'failed';
 }

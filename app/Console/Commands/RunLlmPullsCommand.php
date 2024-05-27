@@ -28,6 +28,6 @@ class RunLlmPullsCommand extends Command
     public function handle()
     {
         $randomId = Str::random();
-        Log::info("Running Llm Pulls " . $randomId);
+        Log::info('Running Llm Pulls '.$randomId);
     }
 }

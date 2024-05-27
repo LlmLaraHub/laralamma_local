@@ -7,14 +7,11 @@ use App\Helpers\EnumHelperTrait;
 /**
  * @property PullStatus $status
  */
-enum TypeEnum : string
+enum TypeEnum: string
 {
-
     use EnumHelperTrait;
 
+    case Embedding = 'embedding';
 
-
-    case Embedding = "embedding";
-
-    case Text = "text";
+    case Text = 'text';
 }

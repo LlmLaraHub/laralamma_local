@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('llms', function (Blueprint $table) {
-            $table->string("type")->default(\App\Domains\Llms\PullStatus::Pending->value);
+            $table->string('type')->default(\App\Domains\Llms\PullStatus::Pending->value);
         });
     }
 

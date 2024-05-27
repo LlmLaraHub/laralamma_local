@@ -20,10 +20,10 @@ class LlmFactory extends Factory
         return [
             'model_name' => fake()->randomElement([
                 'llama3',
-                'gemma '
+                'gemma ',
             ]),
             'last_run' => fake()->dateTime(),
-            'status' => PullStatus::Pending
+            'status' => PullStatus::Pending,
         ];
     }
 }

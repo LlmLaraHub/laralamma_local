@@ -21,6 +21,6 @@ class Llm extends Model
     protected $casts = [
         'status' => PullStatus::class,
         'type' => TypeEnum::class,
-        'last_run' => "datetime"
+        'last_run' => 'datetime',
     ];
 }

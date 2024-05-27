@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('llms', function (Blueprint $table) {
             $table->id();
-            $table->string("model_name");
-            $table->dateTime("last_run")->nullable();
-            $table->string("status")->default(\App\Domains\Llms\PullStatus::Pending->value);
+            $table->string('model_name');
+            $table->dateTime('last_run')->nullable();
+            $table->string('status')->default(\App\Domains\Llms\PullStatus::Pending->value);
             $table->timestamps();
         });
     }

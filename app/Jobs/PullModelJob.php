@@ -26,8 +26,8 @@ class PullModelJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info("Job on queue", [
-            'model' => $this->model
+        Log::info('Job on queue', [
+            'model' => $this->model,
         ]);
     }
 }
