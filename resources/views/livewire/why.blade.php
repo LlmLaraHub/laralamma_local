@@ -25,8 +25,7 @@ new class extends Component {
 
                     Privacy</h2>
                 <div>
-                    Running a local LLM (Large Language Model) means privacy. Your data is not being sent to a server but using these "frozen"
-                    models your able to benefit from them without risk of handing over your data for training.
+                    Running a local Large Language Model (LLM) ensures privacy. Your data is not being sent to a server, as you can utilize these "frozen" models to benefit from their capabilities without risking the transfer of your data for training purposes.
                 </div>
             </div>
         </div>
@@ -38,8 +37,7 @@ new class extends Component {
                     </svg>
                     Cost</h2>
                 <div>
-                    Embedding of Vectorizing data for search is costly. Especially as you uploads 100s of documents.
-                    Using a local LLM will just use your computers power to render it.
+                    Embedding or vectorizing data for search can be costly, especially when you need to upload thousands of documents. However, using a local Large Language Model (LLM) will only utilize your computer's processing power to render it.
                 </div>
             </div>
         </div>
@@ -61,9 +59,9 @@ new class extends Component {
 
                     Sync to a LaraLamma Server or not</h2>
                 <div>
-                    Running LaraLamma local you can upload documents here to generate the embeddings and then send them to LaraLamma for the many features it offers.
-                    Team Document store, integrations and automation.
-                    Or just keep it local and benefit from the automations right here on your system!
+                    Run LaraLamma locally and upload documents here to generate embeddings. Then, send them to LaraLamma for access to its many features.
+
+                    Alternatively, utilize our Team Document store, integrations, and automation. Or, keep it local and benefit from automations right on your system!
                 </div>
             </div>
         </div>
