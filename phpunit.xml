@@ -18,6 +18,7 @@
         </include>
         <exclude>
             <directory suffix=".php">./app/Services/LlmServices</directory>
+            <directory suffix=".php">./app/Providers</directory>
         </exclude>
     </source>
     <php>
